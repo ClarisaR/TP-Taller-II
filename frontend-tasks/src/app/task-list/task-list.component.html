@@ -1,4 +1,21 @@
-<p>task-list works!</p>
-<li *ngFor="let task of taskList; index as i; first as isFirst">
-    {{i}}{{task.name}}-{{task.description}}
-</li>
+<div class="min-h-screen bg-gray-100 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold text-gray-900 mb-4">Lista de Tareas</h1>
+      <ul class="space-y-4">
+        <li *ngFor="let task of taskList; index as i; first as isFirst" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm" [ngClass]="{'bg-green-100': task.completed}">
+          <div>
+            <span class="text-lg font-semibold text-gray-800" [ngClass]="{'line-through': task.completed}">{{i + 1}}. {{task.name}}</span>
+            <p class="text-gray-600" [ngClass]="{'line-through': task.completed}">{{task.description}}</p>
+          </div>
+          <div class="flex space-x-2">
+            <button class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Editar</button>
+            <button class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Eliminar</button>
+            <button class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" (click)="toggleComplete(task)">Completada</button>
+          </div>
+        </li>
+      </ul>
+      <div class="mt-6">
+        <button class="w-full px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Agregar Tarea</button>
+      </div>
+    </div>
+  </div>
