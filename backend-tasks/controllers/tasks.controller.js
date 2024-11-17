@@ -3,7 +3,7 @@ let tasks = [
         id: 1,
         userId: 1,
         status: 'todo',
-        name: "Tarea uno de clarisa",
+        name: "Tarea 1 de clarisa",
         description: 'Una descripcion',
         date: new Date().toISOString()
     },
@@ -11,7 +11,7 @@ let tasks = [
         id: 2,
         userId: 1,
         status: 'in_progress',
-        name: "Tarea dos de clarisa",
+        name: "Tarea 2 de clarisa",
         description: 'Una descripcion',
         date: new Date().toISOString()
     },
@@ -19,10 +19,51 @@ let tasks = [
         id: 3,
         userId: 2,
         status: 'done',
-        name: "Tarea de otro",
+        name: "Tarea 1 de Rama",
         description: 'Una descripcion',
         date: new Date().toISOString()
-    }
+    },
+    {
+        id: 4,
+        userId: 1,
+        status: 'in_progress',
+        name: "Tarea 3 de clarisa",
+        description: 'Una descripcion',
+        date: new Date().toISOString()
+    },
+    {
+        id: 5,
+        userId: 2,
+        status: 'in_progress',
+        name: "Tarea 2 de Rama",
+        description: 'Una descripcion',
+        date: new Date().toISOString()
+    },
+    {
+        id: 6,
+        userId: 2,
+        status: 'in_progress',
+        name: "Tarea 3 de Rama",
+        description: 'Una descripcion',
+        date: new Date().toISOString()
+    },
+    {
+        id: 7,
+        userId: 1,
+        status: 'in_progress',
+        name: "Tarea 4 de clarisa",
+        description: 'Una descripcion',
+        date: new Date().toISOString()
+    },
+    {
+        id: 8,
+        userId: 2,
+        status: 'in_progress',
+        name: "Tarea 4 de Rama",
+        description: 'Una descripcion',
+        date: new Date().toISOString()
+    },
+
 ]
 
 const getAllTasks =  (req, res)=>{
@@ -34,19 +75,22 @@ const getAllTasks =  (req, res)=>{
     res.json(tasksUsuario).end();
 }
 
-const createTask = (req,res)=>{
-    
+const createTask = (req, res) => {
+    console.log('Datos recibidos:', req.body); // Verifica los datos enviados desde el frontend
     const newTask = {
-        "id": tasks.length +1,
-        "userId": req.session.userId,
-        "name": req.body.name,
-        "description": req.body.description,
-        "status": 'todo',
-        "date": new Date().toISOString()
-    }
-    tasks.push(newTask)
-    res.json(newTask)
-}
+        id: tasks.length + 1,
+        userId: req.session.userId,
+        status: 'todo',
+        name: req.body.name,
+        description: req.body.description,
+        date: new Date().toISOString()
+    };
+
+    tasks.push(newTask); // Agregar la tarea a la lista
+    console.log('Nueva tarea agregada:', newTask); // Verifica la nueva tarea
+    res.status(201).json(newTask); // Devuelve la nueva tarea al cliente
+};
+
 
 const updateTask = (req, res) =>{
      const taskIndexFound =  tasks.findIndex((task)=>{
@@ -64,24 +108,24 @@ const updateTask = (req, res) =>{
      tasks[taskIndexFound] = updateTask
      return res.status(200).json(updatedTask).end()
 }
+const deleteTask = (req, res) => {
+    const taskFound = tasks.find((task) => {
+        return task.userId === req.session.userId && task.id === Number(req.params.id);
+    });
 
-const deleteTask = (req, res)=>{
-    const taskFound = tasks.find((task)=>{
-        return task.userId === req.session.userId && task.id === Number(req.params.id)
-    })
-    if(!taskFound){
+    if (!taskFound) {
         return res.status(404).json({
             message: "Tarea no encontrada."
-        }).end()
+        }).end();
     }
-    const filteredTasks = tasks.filter((task)=>{
-        return task.id !== taskFound.id
-    })
-    tasks = filteredTasks
+
+    tasks = tasks.filter((task) => task.id !== taskFound.id); 
+
     return res.status(200).json({
         message: "Tarea eliminada"
-    }).end()
-}
+    }).end();
+};
+
 
 const getTask = (req, res)=>{
     const taskFound = tasks.find((task)=>{

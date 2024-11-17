@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { Task } from 'src/app/models/Task';
 import { environment } from 'src/environments/environment';
+
 
 
 @Injectable({
@@ -14,7 +15,9 @@ export class TaskService {
 
   _taskList = this.taskList.asObservable()
 
-  private baseURL: string = environment.apiURL + '/tasks'
+  private baseURL: string = environment.apiURL + '/tasks';
+  private authURL: string = environment.authURL; // Usar la authURL del environment.ts
+
 
   constructor(protected httpClient: HttpClient) { }
 
@@ -32,5 +35,21 @@ export class TaskService {
           this.taskList.next([])
         }
       )
+  }
+
+  deleteTask(taskId: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseURL}/${taskId}`, { withCredentials: true });
+  }
+  
+  logout() {
+    this.httpClient.post(`${this.authURL}/logout`, {}, { withCredentials: true }).subscribe(
+      () => {
+        // Aquí puedes realizar cualquier acción después de cerrar sesión, por ejemplo, redirigir a la página de login
+        window.location.href = '/login';  // Redirigir al login
+      },
+      error => {
+        console.log('Error al cerrar sesión', error);
+      }
+    );
   }
 }

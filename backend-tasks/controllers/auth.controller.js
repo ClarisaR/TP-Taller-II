@@ -1,6 +1,6 @@
 const usuarios = [
     { id: 1, username: 'clarisa', password: '123' },
-    { id: 2, username: 'otro', password: '123' }
+    { id: 2, username: 'rama', password: '123' }
 ]
 
 const login = (req, res)=>{
@@ -36,15 +36,19 @@ const isAuthenticated = (req, res) => {
     return res.status(200).json({ authenticated: false });
 }
 
-const logout = (req, res) =>{
-    req.session.destroy((error)=>{
-        if(error){
-           return res.status(500).json({message: "Error al cerrar sesion."}).end()
+// authController.js
+const logout = (req, res) => {
+    console.log("Intentando cerrar sesión para el usuario:", req.session.userId);  
+    req.session.destroy((error) => {
+        if (error) {
+            return res.status(500).json({ message: "Error al cerrar sesión." }).end();
         }
-        res.clearCookie('connect.sid')
-        res.status(200).end()
-    })
+        console.log("Sesión cerrada correctamente.");
+        res.clearCookie('connect.sid');  // Elimina la cookie de sesión
+        res.status(200).end();  // Responde con un 200 OK
+    });
 }
+
 
 module.exports = {
     login,
