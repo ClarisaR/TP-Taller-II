@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://localhost:3000'
+  apiURL: 'http://localhost:3000',
+  authURL: 'http://localhost:3000/auth' // URL base para la autenticación
+
 };
 
 /*
