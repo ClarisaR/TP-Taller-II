@@ -5,6 +5,13 @@ const tasksRouter = require("./routes/tasks.routes")
 const { auth } = require("./middlewares/auth.middleware");
 const cors = require('cors')
 
+// DataBase
+const sequelize = require("./domain/public/database/db");
+// Entidades
+const Users = require("./domain/entities/Users");
+
+
+
 const app = express()
 
 //Middleware para activar CORS
@@ -23,6 +30,10 @@ app.use(session({
     saveUninitialized: false, 
     secret: 'shhhh, very secret'
 }));
+
+// Sincronizacion base de datos
+
+sequelize.sync({force: false});
 
 
 app.use("/auth", authRouter)

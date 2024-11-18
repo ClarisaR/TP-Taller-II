@@ -22,7 +22,11 @@
         </li>
       </ul>
       <div class="mt-6">
-        <button class="w-full px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Agregar Tarea</button>
+        <button class="w-full px-4 py-2 text-sm font-medium text-white bg-green-500
+        rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2
+        focus:ring-green-500" (click)="openModal()">Agregar Tarea</button>
       </div>
     </div>
   </div>
+
+  <app-create-task *ngIf="isModalOpen" (close)="closeModal()"></app-create-task>

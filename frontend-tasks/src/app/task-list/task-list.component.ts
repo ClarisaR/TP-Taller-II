@@ -11,6 +11,16 @@ import { TaskService } from '../services/tasks/task.service';
 export class TaskListComponent implements OnInit {
   taskList: Task[] = [];
 
+  isModalOpen = false;
+
+  openModal(): void {
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
@@ -34,7 +44,7 @@ export class TaskListComponent implements OnInit {
       }
     );
   }
-  
+
   logout() {
     this.taskService.logout(); // Llama al método de logout del servicio
   }
