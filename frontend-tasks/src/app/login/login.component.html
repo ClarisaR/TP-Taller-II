@@ -34,6 +34,9 @@
         <button type="submit" class="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" [disabled]="loginForm.invalid">
           Iniciar Sesión
         </button>
+        <button type="button" class="w-full px-4 py-2 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2" (click)="redirectRegister()">
+          Registrarme
+        </button>
       </div>
     </form>
     <p class="mt-4 text-sm text-center text-red-600">{{error}}</p>

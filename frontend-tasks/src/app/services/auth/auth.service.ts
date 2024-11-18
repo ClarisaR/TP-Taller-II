@@ -15,14 +15,14 @@ interface MessageBody {
 })
 export class AuthService {
 
-  private user = new BehaviorSubject<User>(null)
-  _user = this.user.asObservable()
+  private user = new BehaviorSubject<User>(null);
+  _user = this.user.asObservable();
 
-  private baseURL: string = environment.apiURL + '/auth'
+  private baseURL: string = environment.apiURL + '/auth';
   constructor(protected httpClient: HttpClient) {}
 
   login(username: string, password: string): Observable<User> {
-    console.log(username, password)
+    console.log(username, password);
     return this.httpClient
       .post<User>(`${this.baseURL}/login`, { username, password }, { withCredentials: true})
       .pipe(
@@ -32,7 +32,18 @@ export class AuthService {
         }),
         catchError((error) => {
           this.user.next(null); // Si hay error, limpiar el estado del usuario
-          throw Error(error.error.message)
+          throw Error(error.error.message);
+        })
+      );
+  }
+
+  // Método de registro
+  register(username: string, password: string): Observable<MessageBody> {
+    return this.httpClient
+      .post<MessageBody>(`${this.baseURL}/register`, { username, password })
+      .pipe(
+        catchError((error) => {
+          throw Error(error.error.message);
         })
       );
   }
@@ -43,12 +54,12 @@ export class AuthService {
       .get<{ authenticated: boolean }>(`${this.baseURL}/isAuthenticated`, { withCredentials: true })
       .pipe(
         map((response) => {
-          console.log('respuesta')
-          console.log(response)
-         return response.authenticated
+          console.log('respuesta');
+          console.log(response);
+         return response.authenticated;
         }),
         catchError(() => {
-          console.log('error')
+          console.log('error');
           return of(false); // En caso de error, asumimos que no está autenticado
         })
       );

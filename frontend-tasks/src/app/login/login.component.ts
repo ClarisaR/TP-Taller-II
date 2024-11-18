@@ -14,9 +14,9 @@ import { filter } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  title = 'login'
-  error: string
-  loginForm: FormGroup
+  title = 'login';
+  error: string;
+  loginForm: FormGroup;
   constructor(protected loginService: AuthService, protected formBuilder: FormBuilder, protected router: Router) { }
 
   ngOnInit(): void {
@@ -24,18 +24,18 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
-    })
+    });
     // Manejar el estado del usuario desde el observable
     this.loginService._user.subscribe(user => {
 
       if(user){
-        this.router.navigate(['/tasks'])
+        this.router.navigate(['/tasks']);
       }
     });
   }
 
   onSubmit(){
-    console.log('Formulario enviado')
+    console.log('Formulario enviado');
     if (this.loginForm.invalid) {
       this.error = 'Por favor, completa todos los campos.';
       return;
@@ -46,9 +46,13 @@ export class LoginComponent implements OnInit {
     // Invocar el servicio para iniciar sesión
     this.loginService.login(username, password).subscribe({
       error: (err) => {
-        console.log(err)
+        console.log(err);
         this.error = err.message || 'Credenciales inválidas.';
       },
     });
+  }
+
+  redirectRegister() {
+    this.router.navigate(['/register']);
   }
 }

@@ -1,18 +1,16 @@
-const usuarios = [
-    { id: 1, username: 'clarisa', password: '123' },
-    { id: 2, username: 'rama', password: '123' }
-]
+const userService = require("../services/authService");
 
 const login = (req, res)=>{
-    const username = req.body.username
-    const password = req.body.password
-    const usuarioEncontrado = usuarios.find((usuario)=>{
-       return usuario.username === username && usuario.password === password
-    })
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const usuarioEncontrado = userService.getUser(username, password);
+
     if(!usuarioEncontrado){
         res.status(401).json({message: "Usuario o contraseña incorrecto."}).end()
         return;
     }
+
     req.session.regenerate((error)=>{
         if(error){
             res.status(500).json({message: "Hubo un error al iniciar sesion"})
@@ -50,8 +48,27 @@ const logout = (req, res) => {
 }
 
 
+const register = (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Nombre de usuario y contraseña son obligatorios' });
+        }
+
+        const newUser = userService.createUser({ username, password });
+
+        res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
+    } catch (error) {
+        console.error('Error al registrar usuario:', error);
+        res.status(500).json({ message: 'Error al crear un usuario' });
+    }
+}
+
+
 module.exports = {
     login,
     logout,
-    isAuthenticated
+    isAuthenticated,
+    register
 }
