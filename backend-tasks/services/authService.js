@@ -2,7 +2,7 @@ const User = require("../domain/entities/Users");
 
 const getUser = async (username, password) => {
     try {
-        const user = User.findOne({
+        const user = await User.findOne({
             where: {
                 username: username,
                 password: password,

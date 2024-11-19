@@ -1,10 +1,10 @@
 const userService = require("../services/authService");
 
-const login = (req, res)=>{
+const login = async (req, res)=>{
     const username = req.body.username;
     const password = req.body.password;
 
-    const usuarioEncontrado = userService.getUser(username, password);
+    const usuarioEncontrado = await userService.getUser(username, password);
 
     if(!usuarioEncontrado){
         res.status(401).json({message: "Usuario o contraseña incorrecto."}).end()
@@ -48,7 +48,7 @@ const logout = (req, res) => {
 }
 
 
-const register = (req, res) => {
+const register = async (req, res) => {
     try {
         const { username, password } = req.body;
 
@@ -56,7 +56,7 @@ const register = (req, res) => {
             return res.status(400).json({ message: 'Nombre de usuario y contraseña son obligatorios' });
         }
 
-        const newUser = userService.createUser({ username, password });
+        const newUser = await userService.createUser({ username, password });
 
         res.status(201).json({ message: 'Usuario creado exitosamente', user: newUser });
     } catch (error) {
