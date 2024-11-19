@@ -3,8 +3,8 @@ import { TaskStatus } from "./TaskStatus";
 
 export interface Task{
     id: number,
-    userId: number,
-    name: string,
+    User_Id: number,
+    title: string,
     description: string,
     date: string,
     status: TaskStatus

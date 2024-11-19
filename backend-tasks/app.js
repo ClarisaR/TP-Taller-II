@@ -8,9 +8,7 @@ const cors = require('cors')
 // DataBase
 const sequelize = require("./domain/public/database/db");
 // Entidades
-const Users = require("./domain/entities/Users");
-
-
+const { Users, Tasks } = require("./domain/entities")
 
 const app = express()
 

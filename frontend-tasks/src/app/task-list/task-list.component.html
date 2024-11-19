@@ -11,7 +11,7 @@
       <ul class="space-y-4">
         <li *ngFor="let task of taskList; index as i; first as isFirst" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm" [ngClass]="{'bg-green-100': task.completed}">
           <div>
-            <span class="text-lg font-semibold text-gray-800" [ngClass]="{'line-through': task.completed}">{{i + 1}}. {{task.name}}</span>
+            <span class="text-lg font-semibold text-gray-800" [ngClass]="{'line-through': task.completed}">{{i + 1}}. {{task.title}}</span>
             <p class="text-gray-600" [ngClass]="{'line-through': task.completed}">{{task.description}}</p>
           </div>
           <div class="flex space-x-2">

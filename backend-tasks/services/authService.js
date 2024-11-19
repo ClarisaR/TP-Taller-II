@@ -18,8 +18,9 @@ const getUser = async (username, password) => {
 const createUser = async (data) => {
 
     const { username, password } = data;
-
-    const existingUser = await User.findOne({ username });
+    console.log(data);
+    const existingUser = await User.findOne({ where: { username } });
+    console.log("Response DB: " +  existingUser);
     if (existingUser != undefined) {
         throw new Error('El nombre de usuario ya está en uso');
     }

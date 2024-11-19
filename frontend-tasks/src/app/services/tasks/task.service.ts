@@ -5,8 +5,6 @@ import { share } from 'rxjs/operators';
 import { Task } from 'src/app/models/Task';
 import { environment } from 'src/environments/environment';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +20,7 @@ export class TaskService {
   constructor(protected httpClient: HttpClient) { }
 
   getAllTasks(){
-    console.log(this.baseURL)
+
     this.httpClient
       .get<Task[]>(this.baseURL, {withCredentials: true})
       .pipe(share())
@@ -40,7 +38,7 @@ export class TaskService {
   deleteTask(taskId: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseURL}/${taskId}`, { withCredentials: true });
   }
-  
+
   logout() {
     this.httpClient.post(`${this.authURL}/logout`, {}, { withCredentials: true }).subscribe(
       () => {
