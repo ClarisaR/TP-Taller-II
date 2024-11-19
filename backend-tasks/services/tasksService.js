@@ -31,6 +31,20 @@ const updateTask = async (updateData) => {
 
 }
 
+const getTaskById = async (id, userId) => {
+    return await Tasks.findOne({ where: { id, User_Id: userId } });
+  };
+  
+  const deleteTask = async (id) => {
+    try {
+      const result = await Tasks.destroy({ where: { id } });
+      return result > 0; // Devuelve `true` si se eliminó, `false` si no
+    } catch (err) {
+      console.error("Error al eliminar la tarea:", err);
+      return false;
+    }
+  };
+
     /*
 
 
@@ -41,5 +55,7 @@ const deleteAllTasks = */
 module.exports = {
     getAllTasks,
     createTask,
-    updateTask
+    updateTask,
+    getTaskById,
+    deleteTask
 }

@@ -52,25 +52,31 @@ const updateTask = async (req, res) =>{
 }
 
 
-const deleteTask = (req, res) => {
-    const taskFound = tasks.find((task) => {
-        return task.userId === req.session.userId && task.id === Number(req.params.id);
-    });
-
-    if (!taskFound) {
-        return res.status(404).json({
-            message: "Tarea no encontrada."
-        }).end();
+const deleteTask = async (req, res) => {
+    try {
+      const taskId = req.params.id; // Obtiene el ID de la tarea desde la URL
+      const userId = req.session.userId; // Verifica que el usuario tiene permisos
+  
+      // Verifica si la tarea pertenece al usuario antes de eliminarla
+      const taskFound = await taskService.getTaskById(taskId, userId);
+      if (!taskFound) {
+        return res.status(404).json({ message: "Tarea no encontrada o no autorizada." });
+      }
+  
+      // Elimina la tarea
+      const deleted = await taskService.deleteTask(taskId);
+      if (deleted) {
+        res.status(200).json({ message: "Tarea eliminada correctamente." });
+      } else {
+        res.status(400).json({ message: "No se pudo eliminar la tarea." });
+      }
+    } catch (err) {
+      console.error("Error al eliminar la tarea:", err);
+      res.status(500).json({ message: "Error interno del servidor." });
     }
+  };
 
-    tasks = tasks.filter((task) => task.id !== taskFound.id); 
-
-    return res.status(200).json({
-        message: "Tarea eliminada"
-    }).end();
-};
-
-
+  
 const getTask = (req, res)=>{
     const taskFound = tasks.find((task)=>{
         return task.userId === req.session.userId && task.id === Number(req.params.id)
