@@ -11,26 +11,31 @@ const getAllTasks = async (req, res)=>{
     res.json(tasksUsuario);
 }
 
-const createTask = (req, res) => {
-    console.log('Datos recibidos:', req.body); // Verifica los datos enviados desde el frontend
-    const newTask = {
-        userId: req.session.userId,
-        status: 'To Do',
-        name: req.body.name,
+const createTask = async (req, res) => {
+    try {
+      console.log('Datos recibidos:', req.body); // Verifica los datos enviados desde el frontend
+  
+      const newTask = {
+        User_Id: req.session.userId, // Obtén el ID del usuario autenticado desde la sesión
+        status: req.body.status || false, // Asegúrate de que el estado sea un booleano
+        title: req.body.title,
         description: req.body.description,
         date: new Date().toISOString()
-    };
-
-    const response = taskService.createTask(newTask);
-
-    if(response){
+      };
+  
+      const response = await taskService.createTask(newTask);
+  
+      if (response) {
         console.log('Nueva tarea agregada:', newTask); // Verifica la nueva tarea
-
         res.status(201).json(newTask); // Devuelve la nueva tarea al cliente
-    }else {
-        res.status(400).message("Error al cargar la tarea");
+      } else {
+        res.status(400).json({ message: "Error al cargar la tarea" });
+      }
+    } catch (error) {
+      console.error('Error al crear la tarea:', error);
+      res.status(500).json({ message: "Error al crear la tarea" });
     }
-};
+  };
 
 const updateTask = async (req, res) =>{
 

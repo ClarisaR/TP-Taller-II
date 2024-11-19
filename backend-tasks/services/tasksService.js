@@ -5,13 +5,14 @@ const getAllTasks =  async (User_Id) => {
 }
 
 const createTask = async (task) => {
-    try{
-        await Tasks.create(task);
-        return true;
-    }catch (err) {
-        return false;
+    try {
+      const newTask = await Tasks.create(task);
+      return newTask;
+    } catch (error) {
+      console.error('Error al crear la tarea:', error);
+      return null;
     }
-}
+  };
 
 const updateTask = async (updateData) => {
 

@@ -39,6 +39,10 @@ export class TaskService {
     return this.httpClient.delete<any>(`${this.baseURL}/${taskId}`, { withCredentials: true });
   }
 
+  addTask(task: Omit<Task, 'id' | 'User_Id'>): Observable<Task> {
+    return this.httpClient.post<Task>(this.baseURL, task, { withCredentials: true });
+  }
+
   logout() {
     this.httpClient.post(`${this.authURL}/logout`, {}, { withCredentials: true }).subscribe(
       () => {
