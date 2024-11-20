@@ -45,6 +45,26 @@ export class TaskListComponent implements OnInit {
     );
   }
 
+
+  toggleComplete(task: any) : void {
+    task.status = 1; // Actualiza el estado en el frontend para evitar problemas de renderizado
+    this.taskService.updateTask(task.id, { 
+      title: task.title, 
+      description: task.description, 
+      status: 1
+    }).subscribe({
+      next: (res) => {
+        console.log('Tarea actualizada correctamente:', res);
+      },
+      error: (err) => {
+        console.error('Error al actualizar la tarea:', err);
+        task.status = 0; // Revertir el estado en caso de error
+      }
+    });
+    
+  }
+  
+
   logout() {
     this.taskService.logout(); // Llama al método de logout del servicio
   }
