@@ -20,6 +20,7 @@ export class TaskListComponent implements OnInit {
 
   closeModal(): void {
     this.isModalOpen = false;
+    window.location.reload();
   }
   
   openEditModal(task: Task): void { 
@@ -29,6 +30,7 @@ export class TaskListComponent implements OnInit {
 
   closeEditModal(): void { // Nuevo método para cerrar el modal de edición
     this.isEditModalOpen = false;
+    window.location.reload();
   }
 
   constructor(private taskService: TaskService) {}
