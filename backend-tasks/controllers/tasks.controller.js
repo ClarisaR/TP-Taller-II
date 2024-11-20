@@ -37,20 +37,25 @@ const createTask = async (req, res) => {
     }
   };
 
-const updateTask = async (req, res) =>{
 
-    const updateData = {
-         id: req.params.id,
-         title: req.body.title,
-         description: req.body.description,
-         status: req.body.status
+
+  const updateTask = async (req, res) => {
+    try {
+      const updateData = {
+        id: req.params.id,
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status
+      };
+      // Llamada al servicio
+      const response = await taskService.updateTask(updateData, updateData.id);
+
+      return res.status(200).json({ message: 'Tarea actualizada', task: response });
+    } catch (error) {
+      return res.status(500).json({ message: 'Error al actualizar la tarea', error });
     }
-
-    const response = await taskService.updateTask(updateData);
-
-    return res.status(200).json(response);
-}
-
+  };
+  
 
 const deleteTask = async (req, res) => {
     try {

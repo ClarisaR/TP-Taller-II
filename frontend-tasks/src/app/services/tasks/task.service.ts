@@ -35,6 +35,11 @@ export class TaskService {
       )
   }
 
+ 
+  updateTask(id: number, updateData: any): Observable<any> {
+    return this.httpClient.put(`${this.baseURL}/${id}`, updateData, { withCredentials: true });
+  }
+
   deleteTask(taskId: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseURL}/${taskId}`, { withCredentials: true });
   }
