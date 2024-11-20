@@ -10,6 +10,7 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { LoginComponent } from './login/login.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { RegisterComponent } from './components/register/register.component';
+import { EditTaskComponent } from './components/edit-task/edit-task.component'; // Importa el componente
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { RegisterComponent } from './components/register/register.component';
     TaskListComponent,
     LoginComponent,
     CreateTaskComponent,
-    RegisterComponent
+    RegisterComponent,
+    EditTaskComponent 
   ],
   imports: [
     BrowserModule,

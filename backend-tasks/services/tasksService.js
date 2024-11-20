@@ -14,24 +14,21 @@ const createTask = async (task) => {
     }
   };
 
-  const updateTask = async (updateData, id) => {
-    console.log('Método updateTask llamado con:', updateData); // Agrega esta línea
-
-    const { title, description, status } = updateData;
-
-    // Actualizar tarea en la base de datos
-    const update = await Tasks.update(
-      { title, description, status },
-      { where: { id } }
-    );
-
-
+  const updateTask = async (taskId, updateData) => {
+    try {
+      const [updated] = await Tasks.update(updateData, {
+        where: { id: taskId }
+      });
   
-    if (update[0] === 0) {
+      if (updated) {
+        const updatedTask = await Tasks.findOne({ where: { id: taskId } });
+        return updatedTask;
+      }
       throw new Error('Tarea no encontrada');
+    } catch (error) {
+      console.error('Error al actualizar la tarea:', error);
+      return null;
     }
-  
-    return { id, title, description, status };
   };
   
 

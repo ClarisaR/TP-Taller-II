@@ -36,8 +36,8 @@ export class TaskService {
   }
 
  
-  updateTask(id: number, updateData: any): Observable<any> {
-    return this.httpClient.put(`${this.baseURL}/${id}`, updateData, { withCredentials: true });
+  updateTask(id: number, updateData: Partial<Task>): Observable<Task> {
+    return this.httpClient.put<Task>(`${this.baseURL}/${id}`, updateData, { withCredentials: true });
   }
 
   deleteTask(taskId: number): Observable<any> {

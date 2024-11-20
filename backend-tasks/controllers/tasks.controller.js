@@ -41,16 +41,21 @@ const createTask = async (req, res) => {
 
   const updateTask = async (req, res) => {
     try {
+      const taskId = req.params.id;
       const updateData = {
-        id: req.params.id,
         title: req.body.title,
         description: req.body.description,
         status: req.body.status
       };
+  
       // Llamada al servicio
-      const response = await taskService.updateTask(updateData, updateData.id);
-
-      return res.status(200).json({ message: 'Tarea actualizada', task: response });
+      const response = await taskService.updateTask(taskId, updateData);
+  
+      if (response) {
+        return res.status(200).json({ message: 'Tarea actualizada', task: response });
+      } else {
+        return res.status(404).json({ message: 'Tarea no encontrada' });
+      }
     } catch (error) {
       return res.status(500).json({ message: 'Error al actualizar la tarea', error });
     }

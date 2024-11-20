@@ -10,8 +10,9 @@ import { TaskService } from '../services/tasks/task.service';
 
 export class TaskListComponent implements OnInit {
   taskList: Task[] = [];
-
   isModalOpen = false;
+  isEditModalOpen = false;
+  selectedTask: Task;
 
   openModal(): void {
     this.isModalOpen = true;
@@ -19,6 +20,15 @@ export class TaskListComponent implements OnInit {
 
   closeModal(): void {
     this.isModalOpen = false;
+  }
+  
+  openEditModal(task: Task): void { 
+    this.selectedTask = { ...task }; 
+    this.isEditModalOpen = true;
+  }
+
+  closeEditModal(): void { // Nuevo método para cerrar el modal de edición
+    this.isEditModalOpen = false;
   }
 
   constructor(private taskService: TaskService) {}
@@ -47,11 +57,11 @@ export class TaskListComponent implements OnInit {
 
 
   toggleComplete(task: any) : void {
-    task.status = 1; // Actualiza el estado en el frontend para evitar problemas de renderizado
+    task.status = true; // Actualiza el estado en el frontend para evitar problemas de renderizado
     this.taskService.updateTask(task.id, { 
       title: task.title, 
       description: task.description, 
-      status: 1
+      status: true
     }).subscribe({
       next: (res) => {
         console.log('Tarea actualizada correctamente:', res);
