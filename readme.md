@@ -7,6 +7,8 @@
   - El user y configurado para el servicio es "root" y la password "admin"
   - En caso de **Necesitar modificar estos valores** puedes modificarlos en el archivo *db.js* dentro de la direccion "backend-tasks/domain/public/database"
 
+## PROYECTO
+
 - **Backend**
   - Asegurate de ejecutar **npm install** para que se carguen las dependencias de la base de datos antes de ejecutar el proyecto back.
   - El comando de ejecucion es **node app** recuerda posicionarte en la carpeta "backend-tasks" en la consola de ejecucion.
