@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     console.log('Ejecutando guard')
-    // Usar pipe y map para obtener el valor booleano de isAuthenticated()
+
     return this.authService.isAuthenticated().pipe(
       map((isAuthenticated: boolean) => {
         if (isAuthenticated) {
@@ -24,13 +24,10 @@ export class AuthGuard implements CanActivate {
           return true;
         } else {
           console.log('Usuario no autenticado, redirigiendo a login');
-          this.router.navigate(['/login']); // Redirige si no está autenticado
+          this.router.navigate(['/login']);
           return false;
         }
       })
     );
-
   }
-
-
 }

@@ -24,8 +24,4 @@ export class CreateTaskComponent {
       this.close.emit();
     });
   }
-
-  closeModal(): void {
-    this.close.emit();
-  }
 }

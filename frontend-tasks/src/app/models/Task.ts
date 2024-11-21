@@ -1,5 +1,3 @@
-import { TaskStatus } from "./TaskStatus";
-
 
 export interface Task{
     id: number,

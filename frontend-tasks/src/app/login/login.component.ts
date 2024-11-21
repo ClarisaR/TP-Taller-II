@@ -1,11 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth/auth.service';
-import { User } from '../models/User';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +21,7 @@ export class LoginComponent implements OnInit {
       username: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
-    // Manejar el estado del usuario desde el observable
+
     this.loginService._user.subscribe(user => {
 
       if(user){
@@ -43,7 +39,7 @@ export class LoginComponent implements OnInit {
 
     const { username, password } = this.loginForm.value;
 
-    // Invocar el servicio para iniciar sesión
+
     this.loginService.login(username, password).subscribe({
       error: (err) => {
         console.log(err);

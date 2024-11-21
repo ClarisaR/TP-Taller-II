@@ -27,11 +27,10 @@ export class AuthService {
       .post<User>(`${this.baseURL}/login`, { username, password }, { withCredentials: true})
       .pipe(
         tap((user) => {
-          // Si el inicio de sesión es exitoso, actualiza el estado del usuario
           this.user.next(user);
         }),
         catchError((error) => {
-          this.user.next(null); // Si hay error, limpiar el estado del usuario
+          this.user.next(null);
           throw Error(error.error.message);
         })
       );
@@ -60,7 +59,7 @@ export class AuthService {
         }),
         catchError(() => {
           console.log('error');
-          return of(false); // En caso de error, asumimos que no está autenticado
+          return of(false);
         })
       );
   }

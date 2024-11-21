@@ -26,7 +26,7 @@ const login = async (req, res)=>{
     })
 }
 
-// Endpoint para verificar si el usuario está autenticado
+
 const isAuthenticated = (req, res) => {
     if (req.session.userId) {
       return res.status(200).json({ authenticated: true });
@@ -34,7 +34,7 @@ const isAuthenticated = (req, res) => {
     return res.status(200).json({ authenticated: false });
 }
 
-// authController.js
+
 const logout = (req, res) => {
     console.log("Intentando cerrar sesión para el usuario:", req.session.userId);  
     req.session.destroy((error) => {

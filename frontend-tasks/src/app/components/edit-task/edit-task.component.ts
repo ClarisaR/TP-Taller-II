@@ -19,7 +19,4 @@ export class EditTaskComponent {
     });
   }
 
-  closeModal(): void {
-    this.close.emit();
-  }
 }

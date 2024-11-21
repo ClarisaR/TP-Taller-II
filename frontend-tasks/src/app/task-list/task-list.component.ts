@@ -22,13 +22,13 @@ export class TaskListComponent implements OnInit {
     this.isModalOpen = false;
     window.location.reload();
   }
-  
-  openEditModal(task: Task): void { 
-    this.selectedTask = { ...task }; 
+
+  openEditModal(task: Task): void {
+    this.selectedTask = { ...task };
     this.isEditModalOpen = true;
   }
 
-  closeEditModal(): void { // Nuevo método para cerrar el modal de edición
+  closeEditModal(): void {
     this.isEditModalOpen = false;
     window.location.reload();
   }
@@ -59,10 +59,10 @@ export class TaskListComponent implements OnInit {
 
 
   toggleComplete(task: any) : void {
-    task.status = true; // Actualiza el estado en el frontend para evitar problemas de renderizado
-    this.taskService.updateTask(task.id, { 
-      title: task.title, 
-      description: task.description, 
+    task.status = true;
+    this.taskService.updateTask(task.id, {
+      title: task.title,
+      description: task.description,
       status: true
     }).subscribe({
       next: (res) => {
@@ -73,14 +73,14 @@ export class TaskListComponent implements OnInit {
         task.status = 0; // Revertir el estado en caso de error
       }
     });
-    
+
   }
 
   toggleIncomplete(task: any) : void {
-    task.status = false; // Actualiza el estado en el frontend para evitar problemas de renderizado
-    this.taskService.updateTask(task.id, { 
-      title: task.title, 
-      description: task.description, 
+    task.status = false;
+    this.taskService.updateTask(task.id, {
+      title: task.title,
+      description: task.description,
       status: false
     }).subscribe({
       next: (res) => {
@@ -88,14 +88,14 @@ export class TaskListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al actualizar la tarea:', err);
-        task.status = true; // Revertir el estado en caso de error
+        task.status = true;
       }
     });
   }
-  
+
 
   logout() {
-    this.taskService.logout(); // Llama al método de logout del servicio
+    this.taskService.logout();
   }
 }
 

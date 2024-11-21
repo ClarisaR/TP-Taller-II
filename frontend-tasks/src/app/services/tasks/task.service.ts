@@ -14,7 +14,7 @@ export class TaskService {
   _taskList = this.taskList.asObservable()
 
   private baseURL: string = environment.apiURL + '/tasks';
-  private authURL: string = environment.authURL; // Usar la authURL del environment.ts
+  private authURL: string = environment.authURL;
 
 
   constructor(protected httpClient: HttpClient) { }
@@ -35,7 +35,7 @@ export class TaskService {
       )
   }
 
- 
+
   updateTask(id: number, updateData: Partial<Task>): Observable<Task> {
     return this.httpClient.put<Task>(`${this.baseURL}/${id}`, updateData, { withCredentials: true });
   }
@@ -51,8 +51,8 @@ export class TaskService {
   logout() {
     this.httpClient.post(`${this.authURL}/logout`, {}, { withCredentials: true }).subscribe(
       () => {
-        // Aquí puedes realizar cualquier acción después de cerrar sesión, por ejemplo, redirigir a la página de login
-        window.location.href = '/login';  // Redirigir al login
+
+        window.location.href = '/login';
       },
       error => {
         console.log('Error al cerrar sesión', error);

@@ -13,9 +13,9 @@ export class NoauthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
+
       console.log('Ejecutando guard')
-      // Usar pipe y map para obtener el valor booleano de isAuthenticated()
+
       return this.authService.isAuthenticated().pipe(
         map((isAuthenticated: boolean) => {
           if (isAuthenticated) {
@@ -27,5 +27,5 @@ export class NoauthGuard implements CanActivate {
         })
       );
   }
-  
+
 }
