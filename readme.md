@@ -4,7 +4,7 @@
 
 - **My SQL Server**
   - Es necesario crear una base de datos en MySQL con el nombre **TallerW2**
-  - El user y configurado para el servicio es "root" y la password "admin"
+  - El user configurado para el servicio es "root" y la password "admin"
   - En caso de **Necesitar modificar estos valores** puedes modificarlos en el archivo *db.js* dentro de la direccion "backend-tasks/domain/public/database"
 
 ## PROYECTO
