@@ -24,7 +24,7 @@
             (click)="toggleComplete(task)">Completada </button>
 
           <!-- Mostrar el check si la tarea está completada (status = 1) -->
-          <span *ngIf="task.status == true" class="text-green-500 font-bold text-xl">✔️</span>
+          <button *ngIf="task.status == true" class="text-green-500 font-bold text-xl" (click)="toggleIncomplete(task)">✔️</button>
         </div>
       </li>
     </ul>

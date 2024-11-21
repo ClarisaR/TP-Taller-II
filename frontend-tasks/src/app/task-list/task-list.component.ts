@@ -75,6 +75,23 @@ export class TaskListComponent implements OnInit {
     });
     
   }
+
+  toggleIncomplete(task: any) : void {
+    task.status = false; // Actualiza el estado en el frontend para evitar problemas de renderizado
+    this.taskService.updateTask(task.id, { 
+      title: task.title, 
+      description: task.description, 
+      status: false
+    }).subscribe({
+      next: (res) => {
+        console.log('Tarea actualizada correctamente:', res);
+      },
+      error: (err) => {
+        console.error('Error al actualizar la tarea:', err);
+        task.status = true; // Revertir el estado en caso de error
+      }
+    });
+  }
   
 
   logout() {
