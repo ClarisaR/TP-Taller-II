@@ -42,6 +42,7 @@ const createTask = async (req, res) => {
   const updateTask = async (req, res) => {
     try {
       const taskId = req.params.id;
+      const userId = req.session.userId
       const updateData = {
         title: req.body.title,
         description: req.body.description,
@@ -49,7 +50,7 @@ const createTask = async (req, res) => {
       };
   
       // Llamada al servicio
-      const response = await taskService.updateTask(taskId, updateData);
+      const response = await taskService.updateTask(userId, taskId, updateData);
   
       if (response) {
         return res.status(200).json({ message: 'Tarea actualizada', task: response });
