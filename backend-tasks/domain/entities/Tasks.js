@@ -16,7 +16,7 @@ const Task = sequelize.define('Tasks', {
         allowNull: false,
     },
     status: {
-        type: DataTypes.STRING,
+        type: DataTypes.TINYINT({length: 1}),
         allowNull: false,
     },
     date: {

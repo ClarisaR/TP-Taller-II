@@ -14,10 +14,22 @@ const createTask = async (task) => {
     }
   };
 
-  const updateTask = async (taskId, updateData) => {
+  const updateTask = async (userId, taskId, updateData) => {
+    
     try {
+      const currentTask = await Tasks.findOne({where: {id: taskId, User_Id: userId}})
+      if(!currentTask){
+        throw new Error("Tarea no encontrada");
+      }
+      const hasChanges = Object.keys(updateData).some(key=>{
+        return updateData[key] !== currentTask[key]
+      })
+
+      if(!hasChanges){
+        return true;
+      }
       const [updated] = await Tasks.update(updateData, {
-        where: { id: taskId }
+        where: { User_Id: userId, id: taskId }
       });
   
       if (updated) {

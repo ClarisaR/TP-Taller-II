@@ -13,8 +13,6 @@ const getAllTasks = async (req, res)=>{
 
 const createTask = async (req, res) => {
     try {
-      console.log('Datos recibidos:', req.body); // Verifica los datos enviados desde el frontend
-  
       const newTask = {
         User_Id: req.session.userId, // Obtén el ID del usuario autenticado desde la sesión
         status: req.body.status || false, // Asegúrate de que el estado sea un booleano
@@ -24,10 +22,9 @@ const createTask = async (req, res) => {
       };
   
       const response = await taskService.createTask(newTask);
-  
       if (response) {
-        console.log('Nueva tarea agregada:', newTask); // Verifica la nueva tarea
-        res.status(201).json(newTask); // Devuelve la nueva tarea al cliente
+        const createdTask = response.get()
+        res.status(201).json({ message: 'Tarea creada', task: createdTask}); // Devuelve la nueva tarea al cliente
       } else {
         res.status(400).json({ message: "Error al cargar la tarea" });
       }
@@ -42,6 +39,7 @@ const createTask = async (req, res) => {
   const updateTask = async (req, res) => {
     try {
       const taskId = req.params.id;
+      const userId = req.session.userId
       const updateData = {
         title: req.body.title,
         description: req.body.description,
@@ -49,7 +47,7 @@ const createTask = async (req, res) => {
       };
   
       // Llamada al servicio
-      const response = await taskService.updateTask(taskId, updateData);
+      const response = await taskService.updateTask(userId, taskId, updateData);
   
       if (response) {
         return res.status(200).json({ message: 'Tarea actualizada', task: response });
@@ -57,7 +55,7 @@ const createTask = async (req, res) => {
         return res.status(404).json({ message: 'Tarea no encontrada' });
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Error al actualizar la tarea', error });
+      return res.status(500).json({ message: 'Error al actualizar la tarea'});
     }
   };
   

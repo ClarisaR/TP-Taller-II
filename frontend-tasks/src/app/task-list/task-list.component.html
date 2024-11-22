@@ -5,38 +5,38 @@
   </button>
 </nav>
 
-<div class="min-h-screen bg-gray-100 p-6">
-  <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold text-gray-900 mb-4">Lista de Tareas</h1>
+<div class="min-h-screen p-6">
+  <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-md">
+    <div class="flex flex-col sm:flex-row sm:justify-between mb-4">
+      <h1 class="text-2xl font-bold text-gray-900 mb-4">Lista de Tareas</h1> 
+        <button class="px-4 py-2 text-sm font-medium text-blue-600 bg-sky-100 rounded-md hover:bg-sky-50
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-50 transition duration-300" (click)="openModal()">+ Agregar Tarea</button>
+    </div>
+    <h2 class="text-red-500" *ngIf="taskList.length===0">No tenés tareas creadas</h2>
     <ul class="space-y-4">
-      <li *ngFor="let task of taskList; index as i; first as isFirst" class="flex items-center justify-between
-      p-4 bg-gray-50 rounded-lg shadow-sm" [ngClass]="{'bg-green-100': task.completed}">
+      <li *ngFor="let task of taskList; index as i; first as isFirst" class="flex flex-col flex-wrap gap-4 sm:flex-row">
+        <button
+            (click)="toggleComplete(task)"
+          >
+            <img *ngIf="task.status == false" src="assets/checkbox-unchecked.png" class="w-8 h-8"/>
+            <img *ngIf="task.status == true" src="assets/checkbox-checked.png" class="w-8 h-8"/>
+          </button>
         <div>
-          <span class="text-lg font-semibold text-gray-800" [ngClass]="{'line-through': task.completed}">{{i + 1}}. {{task.title}}</span>
+          <span class="text-lg font-semibold text-gray-800" [ngClass]="{'line-through': task.completed}">{{i+1}}. {{task.title}}</span>
           <p class="text-gray-600" [ngClass]="{'line-through': task.completed}">{{task.description}}</p>
+          <small>Creado: <span>{{task.date | date:'medium'}}</span></small><br/>
         </div>
-        <div class="flex space-x-2">
-          <button class="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600
-          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" (click)="openEditModal(task)">Editar</button>
-          <button class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600
-          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" (click)="deleteTask(task.id)">Eliminar</button>
-
-          <button
-            *ngIf="task.status == false" class="px-4 py-2 text-sm font-medium text-white bg-gray-500
-            rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            (click)="toggleComplete(task)">Completar</button>
-
-          <button *ngIf="task.status == true" class="text-green-500 font-bold text-xl" (click)="toggleIncomplete(task)">✔️</button>
+        <div class="flex flex-row gap-4 items-center justify-center sm:ml-auto">
+          <button class="w-8 h-8" (click)="openEditModal(task)"><img src="assets/edit.png" alt="edit"/></button>
+          <button class="w-8 h-8" (click)="deleteTask(task.id)"><img src="assets/delete.png" alt="delete"/></button>
         </div>
+        <div class="border-b border-gray-200 mt-4 w-full last:basis-full"></div>
       </li>
     </ul>
 
-    <div class="mt-6">
-      <button class="w-full px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600
-      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" (click)="openModal()">Agregar Tarea</button>
-    </div>
+    
   </div>
 </div>
 
 <app-create-task *ngIf="isModalOpen" (close)="closeModal()"></app-create-task>
-<app-edit-task *ngIf="isEditModalOpen" [task]="selectedTask" (close)="closeEditModal()"></app-edit-task>
+<app-edit-task *ngIf="isEditModalOpen" [task]="selectedTask" (closeEvent)="closeEditModal()" (updateEvent)="closeEditModal()"></app-edit-task>

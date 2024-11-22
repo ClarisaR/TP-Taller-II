@@ -20,8 +20,11 @@ export class CreateTaskComponent {
   constructor(private taskService: TaskService) {}
 
   onSubmit(): void {
-    this.taskService.addTask(this.task).subscribe(() => {
-      this.close.emit();
-    });
+    this.taskService.addTask(this.task)
+    this.close.emit()
+  }
+
+  onClose(): void {
+    this.close.emit();
   }
 }

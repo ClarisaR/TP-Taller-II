@@ -20,7 +20,6 @@ export class TaskListComponent implements OnInit {
 
   closeModal(): void {
     this.isModalOpen = false;
-    window.location.reload();
   }
 
   openEditModal(task: Task): void {
@@ -30,7 +29,6 @@ export class TaskListComponent implements OnInit {
 
   closeEditModal(): void {
     this.isEditModalOpen = false;
-    window.location.reload();
   }
 
   constructor(private taskService: TaskService) {}
@@ -47,52 +45,18 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteTask(taskId: number): void {
-    this.taskService.deleteTask(taskId).subscribe(
-      () => {
-        this.taskList = this.taskList.filter(task => task.id !== taskId);
-      },
-      error => {
-        console.error('Error al eliminar la tarea', error);
-      }
-    );
+    console.log('TASKID')
+    console.log(taskId)
+    this.taskService.deleteTask(taskId)
   }
 
-
-  toggleComplete(task: any) : void {
-    task.status = true;
+  toggleComplete(task: Task){
     this.taskService.updateTask(task.id, {
       title: task.title,
       description: task.description,
-      status: true
-    }).subscribe({
-      next: (res) => {
-        console.log('Tarea actualizada correctamente:', res);
-      },
-      error: (err) => {
-        console.error('Error al actualizar la tarea:', err);
-        task.status = 0; // Revertir el estado en caso de error
-      }
-    });
-
+      status: !task.status
+    })
   }
-
-  toggleIncomplete(task: any) : void {
-    task.status = false;
-    this.taskService.updateTask(task.id, {
-      title: task.title,
-      description: task.description,
-      status: false
-    }).subscribe({
-      next: (res) => {
-        console.log('Tarea actualizada correctamente:', res);
-      },
-      error: (err) => {
-        console.error('Error al actualizar la tarea:', err);
-        task.status = true;
-      }
-    });
-  }
-
 
   logout() {
     this.taskService.logout();
