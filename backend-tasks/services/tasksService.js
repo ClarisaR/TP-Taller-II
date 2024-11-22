@@ -15,7 +15,7 @@ const createTask = async (task) => {
   };
 
   const updateTask = async (userId, taskId, updateData) => {
-
+    
     try {
       const currentTask = await Tasks.findOne({where: {id: taskId, User_Id: userId}})
       if(!currentTask){
